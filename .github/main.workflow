@@ -1,19 +1,3 @@
-workflow "Run Tests" {
-  on = "pull_request"
-  resolves = ["PR - yarn test"]
-}
-
-action "PR - yarn install" {
-  uses = "Borales/actions-yarn@1.1.0"
-  args = "install"
-}
-
-action "PR - yarn test" {
-  uses = "Borales/actions-yarn@1.1.0"
-  needs = ["PR - yarn install"]
-  args = "test"
-}
-
 workflow "Publish" {
   on = "push"
   resolves = ["[Publish] yarn publish"]

@@ -1,6 +1,6 @@
 workflow "Run Tests" {
   on = "pull_request"
-  resolves = ["PR - yarn test", "PR - yarn install"]
+  resolves = ["PR - yarn test"]
 }
 
 action "PR - yarn install" {
@@ -16,11 +16,7 @@ action "PR - yarn test" {
 
 workflow "Publish" {
   on = "push"
-  resolves = [
-    "yarn gendocs",
-    "yarn build",
-    "yarn publish",
-  ]
+  resolves = ["yarn publish"]
 }
 
 action "if branch is master" {

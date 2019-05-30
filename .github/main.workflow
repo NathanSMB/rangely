@@ -41,7 +41,7 @@ action "[Publish] yarn publish" {
 
 workflow "Test and Lint" {
   on = "pull_request"
-  resolves = ["Borales/actions-yarn@1.1.0"]
+  resolves = ["[Pull] yarn test"]
 }
 
 action "[Pull] yarn install" {
@@ -55,7 +55,8 @@ action "[Pull] yarn gendocs" {
   args = "gendocs"
 }
 
-action "Borales/actions-yarn@1.1.0" {
+action "[Pull] yarn test" {
   uses = "Borales/actions-yarn@1.1.0"
   needs = ["[Pull] yarn gendocs"]
+  args = "test"
 }

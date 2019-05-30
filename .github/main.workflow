@@ -23,8 +23,14 @@ workflow "Publish" {
   ]
 }
 
+action "if branch is master" {
+  uses = "actions/bin/filter@3c0b4f0e63ea54ea5df2914b4fabf383368cd0da"
+  args = "branch master"
+}
+
 action "yarn install" {
   uses = "Borales/actions-yarn@1.1.0"
+  needs = ["if branch is master"]
   args = "install"
 }
 
@@ -46,15 +52,9 @@ action "yarn build" {
   args = "build"
 }
 
-action "if branch is master" {
-  uses = "actions/bin/filter@3c0b4f0e63ea54ea5df2914b4fabf383368cd0da"
-  needs = ["yarn test", "yarn gendocs", "yarn build"]
-  args = "branch master"
-}
-
 action "yarn publish" {
   uses = "Borales/actions-yarn@1.1.0"
-  needs = ["if branch is master"]
+  needs = ["yarn test", "yarn gendocs", "yarn build"]
   args = "publish --access public"
   secrets = ["NPM_AUTH_TOKEN"]
 }

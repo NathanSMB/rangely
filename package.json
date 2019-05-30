@@ -1,10 +1,14 @@
 {
   "name": "rangely",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Yet another range interator similar to pythons built-in.",
   "main": "./dist/main.js",
   "author": "Nathan Burchill <nathan@burchill.io>",
   "license": "MIT",
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/NathanSMB/rangely.git"
+  },
   "scripts": {
     "build": "npx tsc",
     "test": "npx jest",

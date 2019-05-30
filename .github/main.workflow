@@ -38,3 +38,24 @@ action "[Publish] yarn publish" {
   secrets = ["NPM_AUTH_TOKEN"]
   args = "publish --access public"
 }
+
+workflow "Test and Lint" {
+  on = "pull_request"
+  resolves = ["Borales/actions-yarn@1.1.0"]
+}
+
+action "[Pull] yarn install" {
+  uses = "Borales/actions-yarn@1.1.0"
+  args = "install"
+}
+
+action "[Pull] yarn gendocs" {
+  uses = "Borales/actions-yarn@1.1.0"
+  needs = ["[Pull] yarn install"]
+  args = "gendocs"
+}
+
+action "Borales/actions-yarn@1.1.0" {
+  uses = "Borales/actions-yarn@1.1.0"
+  needs = ["[Pull] yarn gendocs"]
+}

@@ -16,7 +16,7 @@ action "PR - yarn test" {
 
 workflow "Publish" {
   on = "push"
-  resolves = ["Borales/actions-yarn@1.1.0"]
+  resolves = ["[Publish] yarn publish"]
 }
 
 action "Filters for GitHub Actions" {

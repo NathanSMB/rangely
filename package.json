@@ -1,6 +1,6 @@
 {
   "name": "rangely",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Yet another range interator similar to pythons built-in.",
   "main": "./dist/main.js",
   "author": "Nathan Burchill <nathan@burchill.io>",

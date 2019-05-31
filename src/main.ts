@@ -1,23 +1,4 @@
-import { Big } from "big.js";
-
-/**
- * @ignore
- * This class is just used to convert the JavaScript numbers to BigNumbers.
- * By using BigNumbers we are able to easily avoid floating point precision errors.
- */
-class RangeDefinition {
-    public start: Big;
-    public end: Big;
-    constructor (first: number, second?: number) {
-        if (second !== undefined) {
-            this.start = new Big(first);
-            this.end = new Big(second);
-        } else {
-            this.start = new Big(0);
-            this.end = new Big(first);
-        }
-    }
-}
+import { RangeDefinition } from "./rangeDefinition";
 
 /**
  * Used to create an iterator in the same manner as pythons range built-in.
@@ -53,10 +34,12 @@ export function range (start: number, end: number): IterableIterator<number>;
 export function range (end: number): IterableIterator<number>;
 
 export function* range (first: number, second?: number, step = 1) {
-    const { start, end } = new RangeDefinition(first, second);
-    const stepSize = new Big(step);
-
-    for (let counter = start; counter.lt(end); counter = counter.add(stepSize)) {
-        yield parseFloat(counter.toString());
+    const rangeDefinition = new RangeDefinition(first, second, step);
+    for (let counter = rangeDefinition.start;
+        rangeDefinition.isInRange(counter);
+        counter = rangeDefinition.getStepAfter(counter)) {
+            yield rangeDefinition.convertToJSNumber(counter);
     }
 }
+
+export { RangelyDefinitionError } from "./rangelyError";

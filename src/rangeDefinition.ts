@@ -7,16 +7,16 @@ import { RangelyDefinitionError } from "./rangelyError";
 export class RangeDefinition {
 
     /** The start of the range. */
-    public readonly start: Big | number;
+    private readonly start: Big | number;
 
     /**
      * The end of the range.
      * This is exclusive so the range will only include up to this number but not this number itself.
      */
-    public readonly end: Big | number;
+    private readonly end: Big | number;
 
     /** The size of the steps to take until you hit the end. */
-    public readonly step: Big | number;
+    private readonly step: Big | number;
 
     /**
      * @param first
@@ -47,12 +47,21 @@ export class RangeDefinition {
     }
 
     /**
+     * Takes all the data this class hold and makes an iterator.
+     * @returns The range iterator.
+     */
+    public* createRange () {
+        for (let counter = this.start; this.isInRange(counter); counter = this.getStepAfter(counter)) {
+            yield this.convertToJSNumber(counter);
+        }
+    }
+
+    /**
      * Mainly used for comparing the current count in the generator to `end`.
-     *
      * @param current - The number to compare to `end`
      * @returns Whether `current` is in range.
      */
-    public isInRange (current: Big | number) {
+    private isInRange (current: Big | number) {
         if (current instanceof Big) {
             return current.lt(this.end);
         }
@@ -69,7 +78,7 @@ export class RangeDefinition {
      * @param current - The number to add `step` to.
      * @returns The next value in the range after `current`.
      */
-    public getStepAfter (current: Big | number) {
+    private getStepAfter (current: Big | number) {
         if (current instanceof Big) {
             return current.add(this.step);
         }
@@ -86,7 +95,7 @@ export class RangeDefinition {
      * @param num - The number to convert to a JS number.
      * @returns `num` as a JS number.
      */
-    public convertToJSNumber (num: Big | number) {
+    private convertToJSNumber (num: Big | number) {
         if (num instanceof Big) {
             return parseFloat(num.toString());
         }

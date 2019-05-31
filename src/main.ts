@@ -33,13 +33,9 @@ export function range (start: number, end: number): IterableIterator<number>;
  */
 export function range (end: number): IterableIterator<number>;
 
-export function* range (first: number, second?: number, step = 1) {
+export function range (first: number, second?: number, step = 1) {
     const rangeDefinition = new RangeDefinition(first, second, step);
-    for (let counter = rangeDefinition.start;
-        rangeDefinition.isInRange(counter);
-        counter = rangeDefinition.getStepAfter(counter)) {
-            yield rangeDefinition.convertToJSNumber(counter);
-    }
+    return rangeDefinition.createRange();
 }
 
 export { RangelyDefinitionError } from "./rangelyError";

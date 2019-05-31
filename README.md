@@ -2,7 +2,7 @@
 
 Yet another range iterator similar to python's range() built-in. There are a million other libraries like it but this one is mine.
 
-Docs: https://nathansmb.github.io/rangely/globals.html#range
+Full Docs: https://nathansmb.github.io/rangely/
 
 Installation:
 
